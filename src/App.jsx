@@ -2,6 +2,7 @@ import { forwardRef, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, TransformControls } from '@react-three/drei';
 import * as THREE from 'three';
+import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 
 const SelectableMesh = forwardRef(function SelectableMesh(
   { color, geometry, position, selected, onSelect, ...props },
@@ -183,18 +184,58 @@ function Scene() {
   );
 }
 
-export default function App() {
+function SiteShell({ children }) {
   return (
     <main className="app-shell">
-      <section className="hero">
-        <div className="copy">
-          <h1>My Website!</h1>
-          <p>
-            TBD
-          </p>
-        </div>
-        <Scene />
-      </section>
+      <header className="topbar">
+        <div className="brand">Hannah Botting</div>
+        <nav className="nav" aria-label="Primary">
+          <NavLink to="/" end className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+            Home
+          </NavLink>
+          <NavLink to="/test" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+            Test
+          </NavLink>
+        </nav>
+      </header>
+      {children}
     </main>
+  );
+}
+
+function HomePage() {
+  return (
+    <section className="hero">
+      <div className="copy">
+        <h1>My Website!</h1>
+        <p>
+          WIP
+        </p>
+      </div>
+      <Scene />
+    </section>
+  );
+}
+
+function TestPage() {
+  return (
+    <section className="page-card">
+      <h1>Test</h1>
+      <p>
+        Test routing page
+      </p>
+    </section>
+  );
+}
+
+export default function App() {
+  return (
+    <SiteShell>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/test" element={<TestPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </SiteShell>
   );
 }

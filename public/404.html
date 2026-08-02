@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Redirecting...</title>
+    <script>
+      // Preserve the original URL so index.html can restore it for BrowserRouter.
+      (function () {
+        sessionStorage.setItem('spa-redirect', window.location.href);
+
+        // This repository is a user site (hannahbotting.github.io), so the SPA entry is at '/'.
+        var target = window.location.origin + '/';
+
+        window.location.replace(target);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
