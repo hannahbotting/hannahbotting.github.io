@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useRef, useState } from 'react';
+import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, TransformControls } from '@react-three/drei';
 import * as THREE from 'three';
@@ -184,6 +184,10 @@ function Scene() {
 }
 
 export default function HomePage() {
+  useEffect(() => {
+    document.title = 'Hannah Botting | Home';
+  }, []);
+
   return (
     <section className="mx-auto grid max-w-[1120px] grid-cols-[1fr_minmax(320px,560px)] items-center gap-8 max-md:grid-cols-1">
       <div className="max-w-[34rem]">
