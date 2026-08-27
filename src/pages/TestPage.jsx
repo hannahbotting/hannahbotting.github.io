@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import Scene from '../three/Scene';
 
 export default function TestPage() {
   useEffect(() => {
@@ -11,6 +12,9 @@ export default function TestPage() {
       <p className="mt-4 text-[1.05rem] leading-relaxed">
         Test routing page
       </p>
+      <div className="mt-8">
+        <Scene />
+      </div>
     </section>
   );
 }

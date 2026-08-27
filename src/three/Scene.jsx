@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import SceneContent from './SceneContent';
+import './Scene.css';
 
 export default function Scene() {
   const objectRefs = useRef({ sphere: null, ring: null, cube: null });

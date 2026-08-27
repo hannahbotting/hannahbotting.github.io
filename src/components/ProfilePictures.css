@@ -1,0 +1,109 @@
+.photo {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  top: 50%;
+  left: 50%;
+  margin: -160px 0 0 -160px;
+}
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#photoA.is-front {
+  transform: translate(-25%, -6%) rotate(-4deg) scale(1);
+  z-index: 2;
+  filter: brightness(1);
+}
+#photoA.is-back {
+  transform: translate(-25%, -6%) rotate(-4deg) scale(0.86);
+  z-index: 1;
+  filter: brightness(0.78);
+}
+#photoB.is-front {
+  transform: translate(25%, 8%) rotate(5deg) scale(1);
+  z-index: 2;
+  filter: brightness(1);
+}
+#photoB.is-back {
+  transform: translate(25%, 8%) rotate(5deg) scale(0.86);
+  z-index: 1;
+  filter: brightness(0.78);
+}
+
+@keyframes aToBack {
+  0% {
+    transform: translate(-25%, -6%) rotate(-4deg) scale(1);
+    filter: brightness(1);
+  }
+  35% {
+    transform: translate(-40%, -11%) rotate(-7deg) scale(1.04);
+    filter: brightness(1.05);
+  }
+  100% {
+    transform: translate(-25%, -6%) rotate(-4deg) scale(0.86);
+    filter: brightness(0.78);
+  }
+}
+@keyframes aToFront {
+  0% {
+    transform: translate(-25%, -6%) rotate(-4deg) scale(0.86);
+    filter: brightness(0.78);
+  }
+  55% {
+    transform: translate(-40%, -11%) rotate(-7deg) scale(1.04);
+    filter: brightness(1.05);
+  }
+  100% {
+    transform: translate(-25%, -6%) rotate(-4deg) scale(1);
+    filter: brightness(1);
+  }
+}
+@keyframes bToBack {
+  0% {
+    transform: translate(25%, 8%) rotate(5deg) scale(1);
+    filter: brightness(1);
+  }
+  35% {
+    transform: translate(40%, 13%) rotate(8deg) scale(1.04);
+    filter: brightness(1.05);
+  }
+  100% {
+    transform: translate(25%, 8%) rotate(5deg) scale(0.86);
+    filter: brightness(0.78);
+  }
+}
+@keyframes bToFront {
+  0% {
+    transform: translate(25%, 8%) rotate(5deg) scale(0.86);
+    filter: brightness(0.78);
+  }
+  55% {
+    transform: translate(40%, 13%) rotate(8deg) scale(1.04);
+    filter: brightness(1.05);
+  }
+  100% {
+    transform: translate(25%, 8%) rotate(5deg) scale(1);
+    filter: brightness(1);
+  }
+}
+
+#photoA.anim-to-back {
+  animation: aToBack 0.6s cubic-bezier(0.33, 0, 0.2, 1) forwards;
+  z-index: 2;
+}
+#photoA.anim-to-front {
+  animation: aToFront 0.6s cubic-bezier(0.33, 0, 0.2, 1) forwards;
+  z-index: 3;
+}
+#photoB.anim-to-back {
+  animation: bToBack 0.6s cubic-bezier(0.33, 0, 0.2, 1) forwards;
+  z-index: 2;
+}
+#photoB.anim-to-front {
+  animation: bToFront 0.6s cubic-bezier(0.33, 0, 0.2, 1) forwards;
+  z-index: 3;
+}

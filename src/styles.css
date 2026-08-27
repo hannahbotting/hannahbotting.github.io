@@ -17,7 +17,7 @@
     ),
     url("./assets/paper-bg.webp") repeat;
     background-size: auto, 400px 400px;
-  color: #3d2b1f;
+  color: var(--color-brand);
 }
 
 * {
@@ -33,11 +33,6 @@ body,
 
 body {
   min-height: 100vh;
-}
-
-.scene canvas {
-  display: block;
-  border-radius: 28px;
 }
 
 @layer utilities {
