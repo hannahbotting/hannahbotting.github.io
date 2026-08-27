@@ -1,4 +1,5 @@
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
+import NameClippings from './components/NameClippings';
 import HomePage from './pages/HomePage';
 import TestPage from './pages/TestPage';
 
@@ -6,7 +7,7 @@ function SiteShell({ children }) {
   return (
     <main className="min-h-screen p-8">
       <header className="mx-auto mb-8 flex max-w-[1120px] items-center justify-between gap-4">
-        <div className="text-lg font-bold tracking-wide">Hannah Botting</div>
+        <NameClippings />
         <nav className="flex gap-3" aria-label="Primary">
           <NavLink
             to="/"
