@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import NameClippings from './components/NameClippings';
 import HomePage from './pages/HomePage';
-import TestPage from './pages/TestPage';
+import ProjectsPage from './pages/ProjectsPage';
+import JournalPage from './pages/JournalPage';
+import LibraryPage from './pages/LibraryPage';
 
 const linkClass = ({ isActive }) =>
   `no-underline px-4 pt-2 pb-0.5 text-lg transition-transform duration-150 hover:scale-110 ${isActive ? 'active' : ''}`;
@@ -21,8 +23,14 @@ function SiteShell({ children }) {
           <NavLink to="/" end className={linkClass}>
             <span className="nav-underline">Home</span>
           </NavLink>
-          <NavLink to="/test" className={linkClass}>
-            <span className="nav-underline">Test</span>
+          <NavLink to="/projects" className={linkClass}>
+            <span className="nav-underline">Projects</span>
+          </NavLink>
+          <NavLink to="/journal" className={linkClass}>
+            <span className="nav-underline">Journal</span>
+          </NavLink>
+          <NavLink to="/library" className={linkClass}>
+            <span className="nav-underline">Library</span>
           </NavLink>
         </nav>
 
@@ -59,8 +67,14 @@ function SiteShell({ children }) {
         <NavLink to="/" end className={linkClass} onClick={closeMenu}>
           <span className="nav-underline">Home</span>
         </NavLink>
-        <NavLink to="/test" className={linkClass} onClick={closeMenu}>
-          <span className="nav-underline">Test</span>
+        <NavLink to="/projects" className={linkClass} onClick={closeMenu}>
+          <span className="nav-underline">Projects</span>
+        </NavLink>
+        <NavLink to="/journal" className={linkClass} onClick={closeMenu}>
+          <span className="nav-underline">Journal</span>
+        </NavLink>
+        <NavLink to="/library" className={linkClass} onClick={closeMenu}>
+          <span className="nav-underline">Library</span>
         </NavLink>
       </nav>
 
@@ -74,7 +88,9 @@ export default function App() {
     <SiteShell>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/test" element={<TestPage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/journal" element={<JournalPage />} />
+        <Route path="/library" element={<LibraryPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </SiteShell>
