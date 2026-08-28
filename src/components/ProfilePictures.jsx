@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import './ProfilePictures.css';
 
 const GRAVATAR_URL = 'https://gravatar.com/avatar/f3b3d719305fd56253fd657958d7c90e?s=512';
-const LINKEDIN_URL = '/favicon.png'; // TODO: change this
+const PROFILE_URL = '/profile.png';
 
 export default function ProfilePictures() {
   const [isAnimating, setIsAnimating] = useState(false);
@@ -46,7 +46,7 @@ export default function ProfilePictures() {
 
   return (
     <div
-      className="relative h-[420px] w-[560px] cursor-pointer select-none"
+      className="relative h-105 w-140 cursor-pointer select-none"
       role="button"
       tabIndex="0"
       aria-label="Toggle which profile photo is in front"
@@ -56,20 +56,20 @@ export default function ProfilePictures() {
       <div
         ref={aRef}
         id="photoA"
-        className={`photo overflow-hidden rounded-full border-4 border-brand bg-brand shadow-[0_14px_30px_rgba(0,0,0,0.4)] ${
+        className={`sticker-photo shadow-[0_14px_30px_rgba(0,0,0,0.4)] ${
           gravatarFront ? 'is-front' : 'is-back'
         }`}
       >
-        <img src={GRAVATAR_URL} alt="Gravatar profile" />
+        <img src={PROFILE_URL} alt="Profile" />
       </div>
       <div
         ref={bRef}
         id="photoB"
-        className={`photo overflow-hidden rounded-full border-4 border-brand bg-brand shadow-[0_14px_30px_rgba(0,0,0,0.4)] ${
+        className={`sticker-photo bg-brand shadow-[0_14px_30px_rgba(0,0,0,0.4)] ${
           gravatarFront ? 'is-back' : 'is-front'
         }`}
       >
-        <img src={LINKEDIN_URL} alt="LinkedIn profile" />
+        <img src={GRAVATAR_URL} alt="Gravatar profile" />
       </div>
     </div>
   );

@@ -4,7 +4,9 @@
 @theme {
   --color-brand: #3d2b1f;
   --color-surface: #07111e;
+  --color-paper: #d5cec9;
   --font-family-display: 'Dosis', system-ui, sans-serif;
+  --breakpoint-xs: 30rem;
 }
 
 :root {

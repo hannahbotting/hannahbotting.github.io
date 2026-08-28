@@ -13,14 +13,16 @@ import i from '../assets/letters/i.png';
 import n2 from '../assets/letters/n2.png';
 import g from '../assets/letters/g.png';
 
-const letters = [
+const hannah = [
   { src: h, alt: 'H', rot: 4 },
   { src: a, alt: 'a', rot: -5 },
   { src: n, alt: 'n', rot: 2 },
   { src: n1, alt: 'n', rot: 6 },
   { src: a1, alt: 'a', rot: -3 },
   { src: h1, alt: 'h', rot: -2 },
-  null,
+];
+
+const botting = [
   { src: b, alt: 'B', rot: -6 },
   { src: o, alt: 'o', rot: 4 },
   { src: t, alt: 't', rot: -2 },
@@ -30,33 +32,40 @@ const letters = [
   { src: g, alt: 'g', rot: 5 },
 ];
 
-const jitter = () => letters.map((letter) => (letter ? letter.rot + Math.floor(Math.random() * 13) - 6 : 0));
+const jitter = () => (letters) => letters.map((letter) => letter.rot + Math.floor(Math.random() * 13) - 6);
+
+function LetterGroup({ letters, current }) {
+  return (
+    <div className="flex items-center">
+      {letters.map((letter, index) => (
+        <img
+          key={index}
+          src={letter.src}
+          alt={letter.alt}
+          className="h-10 w-auto -ml-1 first:ml-0 select-none transition-transform duration-300"
+          style={{ transform: `rotate(${current[index]}deg)` }}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function NameClippings() {
-  const [current, setCurrent] = useState(letters.map((l) => (l ? l.rot : 0)));
+  const [hannahJitter, setHannahJitter] = useState(hannah.map((l) => l.rot));
+  const [bottingJitter, setBottingJitter] = useState(botting.map((l) => l.rot));
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrent(jitter());
+      setHannahJitter(jitter()(hannah));
+      setBottingJitter(jitter()(botting));
     }, 1000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="flex items-center" role="img" aria-label="Hannah Botting">
-      {letters.map((letter, index) =>
-        letter ? (
-          <img
-            key={index}
-            src={letter.src}
-            alt={letter.alt}
-            className="h-10 w-auto -ml-1 first:ml-0 select-none transition-transform duration-300"
-            style={{ transform: `rotate(${current[index]}deg)` }}
-          />
-        ) : (
-          <span key={index} className="w-3" />
-        ),
-      )}
+    <div className="flex flex-wrap items-center gap-y-2" role="img" aria-label="Hannah Botting">
+      <LetterGroup letters={hannah} current={hannahJitter} />
+      <LetterGroup letters={botting} current={bottingJitter} />
     </div>
   );
 }
