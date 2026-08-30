@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import h from '../assets/letters/h.png';
-import a from '../assets/letters/a.png';
-import n from '../assets/letters/n.png';
-import n1 from '../assets/letters/n1.png';
-import a1 from '../assets/letters/a1.png';
-import h1 from '../assets/letters/h1.png';
-import b from '../assets/letters/b.png';
-import o from '../assets/letters/o.png';
-import t from '../assets/letters/t.png';
-import t1 from '../assets/letters/t1.png';
-import i from '../assets/letters/i.png';
-import n2 from '../assets/letters/n2.png';
-import g from '../assets/letters/g.png';
+import h from '../assets/clippings/letters/h.png';
+import a from '../assets/clippings/letters/a.png';
+import n from '../assets/clippings/letters/n.png';
+import n1 from '../assets/clippings/letters/n1.png';
+import a1 from '../assets/clippings/letters/a1.png';
+import h1 from '../assets/clippings/letters/h1.png';
+import b from '../assets/clippings/letters/b.png';
+import o from '../assets/clippings/letters/o.png';
+import t from '../assets/clippings/letters/t.png';
+import t1 from '../assets/clippings/letters/t1.png';
+import i from '../assets/clippings/letters/i.png';
+import n2 from '../assets/clippings/letters/n2.png';
+import g from '../assets/clippings/letters/g.png';
 
 const hannah = [
   { src: h, alt: 'H', rot: 4 },
