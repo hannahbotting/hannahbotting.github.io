@@ -3,3 +3,6 @@ dist/
 .DS_Store
 public/favicon.png
 .vscode
+src/three/catalog.js
+src/three/textureList.js
+tmp

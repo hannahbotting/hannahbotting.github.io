@@ -6,6 +6,8 @@ import ProjectsPage from './pages/ProjectsPage';
 import JournalPage from './pages/JournalPage';
 import LibraryPage from './pages/LibraryPage';
 
+const DOWNLOAD_URL = 'https://github.com/hannahbotting/cv/releases/latest/download/hannah-botting-cv.pdf';
+
 const linkClass = ({ isActive }) =>
   `no-underline px-4 pt-2 pb-0.5 text-lg transition-transform duration-150 hover:scale-110 ${isActive ? 'active' : ''}`;
 
@@ -79,6 +81,14 @@ function SiteShell({ children }) {
       </nav>
 
       {children}
+
+      <a
+        href={DOWNLOAD_URL}
+        download
+        className="fixed right-6 bottom-6 z-40 rounded-full border border-brand/15 bg-paper px-5 py-2.5 text-brand shadow-[0_8px_30px_rgba(0,0,0,0.25)] transition-transform duration-150 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/50"
+      >
+        Download CV
+      </a>
     </main>
   );
 }

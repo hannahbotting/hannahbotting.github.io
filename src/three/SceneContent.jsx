@@ -1,119 +1,89 @@
-import { useMemo } from 'react';
+import { useLayoutEffect } from 'react';
+import { useThree, useLoader } from '@react-three/fiber';
 import { OrbitControls, TransformControls } from '@react-three/drei';
-import * as THREE from 'three';
-import SelectableMesh from './SelectableMesh';
+import { TextureLoader, EquirectangularReflectionMapping, LinearSRGBColorSpace } from 'three';
+import { assetUrl } from './catalog';
+import Room from './Room';
+import Lights from './Lights';
+import CatalogModel from './CatalogModel';
+import SelectionOutline from './SelectionOutline';
+import { sceneStore, useScene } from './sceneStore';
 
-export default function SceneContent({ selectedId, setSelectedId, objectRefs }) {
-  const selectedObject = objectRefs.current[selectedId] || null;
-  const stars = useMemo(() => {
-    const pointsCount = 900;
-    const positions = new Float32Array(pointsCount * 3);
+function SkyBackground({ files }) {
+  const scene = useThree((state) => state.scene);
+  const texture = useLoader(TextureLoader, files);
+  texture.mapping = EquirectangularReflectionMapping;
+  texture.colorSpace = LinearSRGBColorSpace;
 
-    for (let index = 0; index < pointsCount; index += 1) {
-      const radius = 3.5 + Math.random() * 3.5;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(THREE.MathUtils.randFloatSpread(2));
+  useLayoutEffect(() => {
+    const previousBackground = scene.background;
+    const previousEnvironment = scene.environment;
+    scene.background = texture;
+    scene.environment = texture;
+    return () => {
+      scene.background = previousBackground;
+      scene.environment = previousEnvironment;
+    };
+  }, [scene, texture]);
 
-      positions[index * 3] = radius * Math.sin(phi) * Math.cos(theta);
-      positions[index * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      positions[index * 3 + 2] = radius * Math.cos(phi);
+  return null;
+}
+
+export default function SceneContent() {
+  const { objects, selectedId, transformMode, tick } = useScene();
+  const orbitControls = useThree((state) => state.controls);
+  void tick;
+
+  const selectedObject = selectedId ? sceneStore.getRef(selectedId) : null;
+  const selectedRecord = selectedId ? sceneStore.getObject(selectedId) : null;
+  const movable = selectedRecord?.movable ?? false;
+
+  const updateCoordinates = (event) => {
+    const target = event?.target?.object ?? event?.object ?? selectedObject;
+    if (target) {
+      sceneStore.actions.setCoordinates({
+        x: target.position.x,
+        y: target.position.y,
+        z: target.position.z,
+      });
     }
-
-    return positions;
-  }, []);
+  };
 
   return (
     <>
-      <color attach="background" args={['#08111f']} />
-      <fog attach="fog" args={['#08111f', 10, 22]} />
-      <ambientLight intensity={1.15} />
-      <directionalLight position={[3, 4, 6]} intensity={1.6} />
-      <pointLight position={[-3, -1, 3]} intensity={3} color="#72f0d4" />
+      <SkyBackground
+        files={assetUrl('sky-background/sky-background.jpg')}
+      />
 
-      <points>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            array={stars}
-            count={stars.length / 3}
-            itemSize={3}
-          />
-        </bufferGeometry>
-        <pointsMaterial color="#c6d6ff" size={0.02} transparent opacity={0.9} />
-      </points>
+      <Lights />
 
-      <group>
-        <SelectableMesh
-          ref={(node) => {
-            objectRefs.current.sphere = node;
-          }}
-          selected={selectedId === 'sphere'}
-          onSelect={() => setSelectedId('sphere')}
-          geometry={new THREE.IcosahedronGeometry(1.25, 1)}
-          position={[-1.25, 0, 0]}
-          color="#72f0d4"
-        />
-        <mesh
-          ref={(node) => {
-            objectRefs.current.ring = node;
-          }}
-          rotation={[Math.PI * 0.45, 0, 0]}
-          position={[1.55, 0.25, 0]}
-          onClick={(event) => {
-            event.stopPropagation();
-            setSelectedId('ring');
-          }}
-          onPointerOver={() => {
-            document.body.style.cursor = 'pointer';
-          }}
-          onPointerOut={() => {
-            document.body.style.cursor = 'auto';
-          }}
-        >
-          <torusGeometry args={[1.25, 0.16, 18, 60]} />
-          <meshStandardMaterial color="#f5b961" roughness={0.4} metalness={0.2} />
-        </mesh>
-        <mesh
-          ref={(node) => {
-            objectRefs.current.cube = node;
-          }}
-          position={[0, -1.75, -0.1]}
-          onClick={(event) => {
-            event.stopPropagation();
-            setSelectedId('cube');
-          }}
-          onPointerOver={() => {
-            document.body.style.cursor = 'pointer';
-          }}
-          onPointerOut={() => {
-            document.body.style.cursor = 'auto';
-          }}
-        >
-          <boxGeometry args={[1.1, 1.1, 1.1]} />
-          <meshStandardMaterial
-            color="#c6d6ff"
-            roughness={0.35}
-            metalness={0.1}
-            emissive={selectedId === 'cube' ? '#1a2444' : '#000000'}
-            emissiveIntensity={selectedId === 'cube' ? 0.35 : 0}
-          />
-        </mesh>
-      </group>
+      <gridHelper args={[30, 30, 0x888888, 0x888888]} position={[0, -0.01, 0]} />
 
-      {selectedObject ? (
+      <Room />
+
+      {objects
+        .filter((instance) => instance.movable)
+        .map((instance) => (
+          <CatalogModel key={instance.id} instance={instance} />
+        ))}
+
+      {selectedObject && movable ? (
         <TransformControls
           object={selectedObject}
-          mode="translate"
+          mode={transformMode}
           onMouseDown={() => {
-            document.body.style.cursor = 'grabbing';
+            if (orbitControls) orbitControls.enabled = false;
           }}
           onMouseUp={() => {
-            document.body.style.cursor = 'auto';
+            if (orbitControls) orbitControls.enabled = true;
           }}
+          onObjectChange={updateCoordinates}
         />
       ) : null}
 
-      <OrbitControls makeDefault enableDamping enabled={!selectedObject} />
+      <SelectionOutline selectedId={selectedId} />
+
+      <OrbitControls makeDefault enableDamping target={[0, 2, 0]} />
     </>
   );
 }
