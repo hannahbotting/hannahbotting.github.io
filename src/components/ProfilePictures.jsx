@@ -46,7 +46,7 @@ export default function ProfilePictures() {
 
   return (
     <div
-      className="relative h-105 w-140 cursor-pointer select-none"
+      className="relative h-60 w-140 cursor-pointer select-none md:h-105"
       role="button"
       tabIndex="0"
       aria-label="Toggle which profile photo is in front"

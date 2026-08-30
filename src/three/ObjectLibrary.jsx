@@ -133,7 +133,7 @@ export default function ObjectLibrary() {
   return (
     <div className={`z-2 ${collapsed ? 'collapsed' : ''}`} id="overlay-controls">
       <div className="nav flex-column nav-pills w-auto h-100" id="tabButtons" role="tablist">
-        {TABS.map((item) => (
+        {TABS.filter((item) => item.id !== 'tab3' && item.id !== 'tab4').map((item) => (
           <div key={item.id}>
             <button
               className={`nav-link ${tab === item.id ? 'active' : ''} d-none d-md-block`}

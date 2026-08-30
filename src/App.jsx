@@ -28,12 +28,14 @@ function SiteShell({ children }) {
           <NavLink to="/projects" className={linkClass}>
             <span className="nav-underline">Projects</span>
           </NavLink>
+          {/* Temporarily hidden
           <NavLink to="/journal" className={linkClass}>
             <span className="nav-underline">Journal</span>
           </NavLink>
           <NavLink to="/library" className={linkClass}>
             <span className="nav-underline">Library</span>
           </NavLink>
+          */}
         </nav>
 
         <button
@@ -53,7 +55,7 @@ function SiteShell({ children }) {
 
       {/* Popout drawer */}
       <nav
-        className={`fixed inset-y-0 right-0 z-50 flex w-64 transform flex-col gap-2 border-l border-brand/15 bg-paper p-6 pt-24 shadow-[0_24px_80px_rgba(0,0,0,0.25)] backdrop-blur transition-transform duration-300 sm:hidden ${
+        className={`fixed inset-y-0 right-0 z-[120] flex w-64 transform flex-col gap-2 border-l border-brand/15 bg-paper p-6 pt-24 shadow-[0_24px_80px_rgba(0,0,0,0.25)] backdrop-blur transition-transform duration-300 sm:hidden ${
           menuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         aria-label="Primary"
@@ -72,12 +74,14 @@ function SiteShell({ children }) {
         <NavLink to="/projects" className={linkClass} onClick={closeMenu}>
           <span className="nav-underline">Projects</span>
         </NavLink>
+        {/* Temporarily hidden
         <NavLink to="/journal" className={linkClass} onClick={closeMenu}>
           <span className="nav-underline">Journal</span>
         </NavLink>
         <NavLink to="/library" className={linkClass} onClick={closeMenu}>
           <span className="nav-underline">Library</span>
         </NavLink>
+        */}
       </nav>
 
       {children}
@@ -85,7 +89,7 @@ function SiteShell({ children }) {
       <a
         href={DOWNLOAD_URL}
         download
-        className="fixed right-6 bottom-6 z-40 rounded-full border border-brand/15 bg-paper px-5 py-2.5 text-brand shadow-[0_8px_30px_rgba(0,0,0,0.25)] transition-transform duration-150 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/50"
+        className="fixed right-6 bottom-6 z-[130] rounded-full border border-brand/15 bg-paper px-5 py-2.5 text-brand shadow-[0_8px_30px_rgba(0,0,0,0.25)] transition-transform duration-150 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/50"
       >
         Download CV
       </a>
