@@ -17,6 +17,7 @@ const FLAT_SRC = 'public/textures/flat-textures';
 
 function capitalizeWords(name) {
   return name
+    .replace(/_/g, ' ')
     .split(/\s+/)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
